@@ -31,12 +31,12 @@ console.log(currentDate);
 
 $('#searchButton').on('click', function (event) {
     event.preventDefault();
-    city = $('#inputCity').val();
+    city = $('#inputCity').val().toUpperCase();
     console.log(city);
     queryURL = 'http://api.openweathermap.org/data/2.5/weather?q=' + city + '&appid=819c140350303d362f2ba760003b1335'
 
 
-/////////////////  ajax call to get current forecast information set to cityresultsObj////////////////////
+    /////////////////  ajax call to get current forecast information set to cityresultsObj////////////////////
     $.ajax({
         url: queryURL,
         method: "GET"
@@ -48,6 +48,12 @@ $('#searchButton').on('click', function (event) {
         cityresultsObj.windSpeed = response.wind.speed;
         cityresultsObj.icon = response.weather[0].icon;
 
+        $('#cityDisplay').text(city);
+        $('#tempDisplay').text('Temperature: '+cityresultsObj.temp);
+        $('#humidityDisplay').text('Humidity: '+cityresultsObj.humidity);
+        $('#windSpeedDisplay').text('Wind Speed: '+cityresultsObj.windSpeed);
+
+
         var lat = response.coord.lat;
         var lon = response.coord.lon;
 
@@ -58,22 +64,29 @@ $('#searchButton').on('click', function (event) {
         // console.log(lat);
         // console.log(lon);
 
-////////////////////ajax call to get uvindex  //////////////////////////////////////
+        ////////////////////ajax call to get uvindex  //////////////////////////////////////
         $.ajax({
             url: 'http://api.openweathermap.org/data/2.5/uvi/forecast?appid=' + apiKey + '&lat=' + lat + '&lon=' + lon + '&cnt=1',
             method: "GET"
         }).then(function (response) {
 
             cityresultsObj.uvIndex = response[0].value;
+            $('#uvIndexDisplay').text('UV Index: '+cityresultsObj.uvIndex)
             // console.log(cityresultsObj.uvIndex);
         })
-        
+
         cityArr.push([city, cityresultsObj]);
         console.log(cityArr);
 
         // console.log(response.main)
         // console.log(response.weather)
     });
+    ///////////////assign h# elements///////////////
+    // $('#cityDisplay').text(city);
+    // $('#tempDisplay').text(cityresultsObj.temp);
+    // $('#humidityDisplay').text(cityresultsObj.humidity);
+    // $('#windSpeedDisplay').text(cityresultsObj.windSpeed);
+    // $('#uvIndexDisplay').text(cityresultsObj.uvIndex)
 
 
 })
