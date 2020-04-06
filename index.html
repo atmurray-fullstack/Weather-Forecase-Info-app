@@ -1,17 +1,83 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
         integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
     <link rel="stylesheet" href="style.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Permanent+Marker&display=swap" rel="stylesheet">
-    
+    <link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Permanent+Marker&display=swap"
+        rel="stylesheet">
+
     <title>Weather Forecast Search</title>
 </head>
+
 <body>
+    <div class=container>
+        <!--Header Row-->
+        <div class='row'>
+            <div class='col-12 text-center header'>
+                <h1>
+                    Weather Dashboard
+                </h1>
+            </div>
+        </div>
+
+        <div class='row'>
+            <div class='col-3 searchBar'>
+
+                <div class="input-group-sm mb-3">
+                    <input id='inputCity' type="text" class="form-control input-sm" placeholder="Search City"
+                        aria-label="Search City" aria-describedby="button-addon2">
+                    <div class="input-group-append">
+                        <button id='searchButton' class="btn btn-outline-secondary" type="button"
+                            id="button-addon2">search</button>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class='col-9 resultDisplay'>
+                <div class = 'row mb-5 mt-3'>
+                <div class='col-12 text-left currentForecast'>
+                    <h2>City Placeholder</h2>
+                        <hr>
+                        <h3>Temperature:</h3>
+                        <br>
+                        <h3>Humidity:</h3>
+                        <br>
+                        <h3>Wind Speed:</h3>
+                        <br>
+                        <h3>UV Index</h3>
+                        <br>
+
+                </div>
+            </div>
+
+                <div class='row forecastFiveD'>
+                    <div class= 'col-12'>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+        </div>
+
+
+
+
+
+    </div>
+
+
+
+
+
 
 
 
@@ -21,6 +87,7 @@
 
     <script src='moment.-lib.js'></script>
     <script src='script.js'></script>
-    
+
 </body>
+
 </html>

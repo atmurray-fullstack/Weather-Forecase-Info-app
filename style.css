@@ -1,0 +1,32 @@
+
+.container{
+    width:100%;
+}
+
+.header{
+    height:10vh;
+    background-color: dimgrey;
+    color:whitesmoke;
+    border-bottom: solid black 2px;
+}
+
+.searchBar{
+    background-color: wheat;
+    height: 90vh;
+}
+
+.resultDisplay{
+background-color: cadetblue;
+height: 90vh;
+
+}
+
+.currentForecast{
+    height:60%;
+    border: red solid 2px;
+}
+
+.forecastFiveD{
+    height:40%;
+    border: black solid 3px;
+}
