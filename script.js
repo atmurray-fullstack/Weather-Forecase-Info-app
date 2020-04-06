@@ -57,6 +57,7 @@ if (localStorage.getItem('city') !== null) {
         })
         var newDiv = $('<div>').text(city);
         newDiv.addClass('prevSearch');
+        newDiv.attr('id', city);
         $('#searched').prepend(newDiv);
         localStorage.setItem('city', city)
         cityArr.push([city, cityresultsObj]);
@@ -117,9 +118,52 @@ $('#searchButton').on('click', function (event) {
     ///////  APPEND NEW ELEMENTS INSIDE CLICK EVENT//////////
     var newDiv = $('<div>').text(city);
     newDiv.addClass('prevSearch');
+    newDiv.attr('id', city);
     $('#searched').prepend(newDiv);
-    localStorage.setItem('city', city)
+    localStorage.setItem('city', city);
 
 })
 
 
+$('#searched').on('click', function (event) {
+    city = event.target.id;
+    console.log(city);
+    currentDate = getTime();
+    queryURL = 'http://api.openweathermap.org/data/2.5/weather?q=' + city + '&appid=819c140350303d362f2ba760003b1335'
+
+    /////////////////  ajax call to get current forecast information set to cityresultsObj////////////////////
+    $.ajax({
+        url: queryURL,
+        method: "GET"
+    }).then(function (response) {
+        console.log(response);
+        cityresultsObj = new Object();
+        cityresultsObj.temp = Math.floor((response.main.temp - 273.15) * (9 / 5) + 32);
+        cityresultsObj.humidity = response.main.humidity;
+        cityresultsObj.windSpeed = response.wind.speed;
+        cityresultsObj.icon = response.weather[0].icon;
+
+        var lat = response.coord.lat;
+        var lon = response.coord.lon;
+
+        $('#cityDisplay').text(city + '   ' + currentDate);
+        $('#tempDisplay').text('Temperature: ' + cityresultsObj.temp + ' F');
+        $('#humidityDisplay').text('Humidity: ' + cityresultsObj.humidity + ' %');
+        $('#windSpeedDisplay').text('Wind Speed: ' + cityresultsObj.windSpeed + ' mph');
+
+
+        ////////////////////ajax call to get uvindex  //////////////////////////////////////
+        $.ajax({
+            url: 'http://api.openweathermap.org/data/2.5/uvi/forecast?appid=' + apiKey + '&lat=' + lat + '&lon=' + lon + '&cnt=1',
+            method: "GET"
+        }).then(function (response) {
+            cityresultsObj.uvIndex = response[0].value;
+            $('#uvIndexDisplay').text('UV Index: ' + cityresultsObj.uvIndex)
+        })
+
+        localStorage.setItem('city', city)
+
+
+    })
+
+});
