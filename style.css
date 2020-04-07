@@ -30,7 +30,7 @@ height: 90vh;
     border: red solid 2px;
 }
 
-.forecastFiveD{
+#forecastFiveD{
     height:40%;
     border: black solid 3px;
 }
@@ -41,4 +41,14 @@ background-color: gainsboro;
 padding:4px;
 width: 100%;
 
+}
+#forecastContainer{
+    height: 100%;
+    background-color: indianred;
+
+}
+.forecastBlock{
+    height:90%;
+    border: solid black 2px;
+    border-radius: 5px;
 }

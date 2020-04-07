@@ -93,7 +93,7 @@ $('#searchButton').on('click', function (event) {
         
         var lat = response.coord.lat;
         var lon = response.coord.lon;
-
+        
         $('#cityDisplay').text(city + '   ' + currentDate);
         $('#tempDisplay').text('Temperature: ' + cityresultsObj.temp + ' F');
         $('#humidityDisplay').text('Humidity: ' + cityresultsObj.humidity + ' %');
@@ -109,18 +109,34 @@ $('#searchButton').on('click', function (event) {
             cityresultsObj.uvIndex = response[0].value;
             $('#uvIndexDisplay').text('UV Index: ' + cityresultsObj.uvIndex)
         })
+        //////////////////ajax call to get icon //////////////////////
+        $.ajax({
+            url:  + apiKey + '&lat=' + lat + '&lon=' + lon + '&cnt=1',
+            method: "GET"
+        }).then(function (response) {
+
+            
+        })
+
+
+
+
+
         //////////////////// Five Day Forecast ajax/////////////////////////
         $.ajax({
-            url: 'http://api.openweathermap.org/data/2.5/forecast?q='+city+'&cnt=5&appid=819c140350303d362f2ba760003b1335',
+            url: 'http://api.openweathermap.org/data/2.5/forecast?q=' + city + '&cnt=5&appid=819c140350303d362f2ba760003b1335',
             method: "GET"
         }).then(function (response) {
             // console.log(response);
-            localStorage.setItem('fiveDay',JSON.stringify(response));
+            localStorage.setItem('fiveDay', JSON.stringify(response));
+
             // fiveDayForecast = JSON.parse(localStorage.getItem('fiveDay'));
-            
+
+
         });
-        fiveDayForecast = JSON.parse(localStorage.getItem('fiveDay'));
-        console.log(fiveDayForecast);
+
+
+
         cityArr.push([city, cityresultsObj]);
         // console.log(cityArr);
 
@@ -133,12 +149,30 @@ $('#searchButton').on('click', function (event) {
     $('#searched').prepend(newDiv);
     localStorage.setItem('city', city);
 
+    fiveDayForecast = JSON.parse(localStorage.getItem('fiveDay'));
+    console.log(fiveDayForecast);
+
+    for (let i = 0; i < fiveDayForecast.list.length; i++) {
+
+        var newDiv = $('<div>')
+        var dateDiv = $('<div>').text(currentDate);
+        var tempDiv = $('<div>').text(fiveDayForecast.list[i].main.temp)
+
+        
+        newDiv.addClass('col-2 mx-auto mt-3 text-left forecastBlock');
+        newDiv.append(dateDiv)
+        newDiv.append(tempDiv)
+        newDiv.append()
+        $('#forecastFiveD').append(newDiv);
+
+    }
+
 })
 
 
 $('#searched').on('click', function (event) {
     city = event.target.id;
-    console.log(city);
+    // console.log(city);
     currentDate = getTime();
     queryURL = 'http://api.openweathermap.org/data/2.5/weather?q=' + city + '&appid=819c140350303d362f2ba760003b1335'
 
