@@ -7,7 +7,7 @@ var iconUrl = ''
 function getTime() {
     return moment().format('L');
 }
-
+var fiveDayForecast = null;
 var currentDate = getTime();
 
 
@@ -90,7 +90,7 @@ $('#searchButton').on('click', function (event) {
         cityresultsObj.humidity = response.main.humidity;
         cityresultsObj.windSpeed = response.wind.speed;
         cityresultsObj.icon = response.weather[0].icon;
-
+        
         var lat = response.coord.lat;
         var lon = response.coord.lon;
 
@@ -109,9 +109,20 @@ $('#searchButton').on('click', function (event) {
             cityresultsObj.uvIndex = response[0].value;
             $('#uvIndexDisplay').text('UV Index: ' + cityresultsObj.uvIndex)
         })
-
+        //////////////////// Five Day Forecast ajax/////////////////////////
+        $.ajax({
+            url: 'http://api.openweathermap.org/data/2.5/forecast?q='+city+'&cnt=5&appid=819c140350303d362f2ba760003b1335',
+            method: "GET"
+        }).then(function (response) {
+            // console.log(response);
+            localStorage.setItem('fiveDay',JSON.stringify(response));
+            // fiveDayForecast = JSON.parse(localStorage.getItem('fiveDay'));
+            
+        });
+        fiveDayForecast = JSON.parse(localStorage.getItem('fiveDay'));
+        console.log(fiveDayForecast);
         cityArr.push([city, cityresultsObj]);
-        console.log(cityArr);
+        // console.log(cityArr);
 
 
     });
@@ -167,3 +178,4 @@ $('#searched').on('click', function (event) {
     })
 
 });
+
