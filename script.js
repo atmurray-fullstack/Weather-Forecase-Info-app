@@ -135,8 +135,8 @@ $('#searchButton').on('click', function (event) {
     localStorage.setItem('city', city);
 
     fiveDayForecast = JSON.parse(localStorage.getItem('fiveDay'));
-    console.log(fiveDayForecast);
-
+    // console.log(fiveDayForecast);
+    $('#forecastFiveD').empty()
     for (let i = 0; i < fiveDayForecast.list.length; i++) {
 
         var newDiv = $('<div>')
@@ -153,7 +153,7 @@ $('#searchButton').on('click', function (event) {
         newDiv.append(dateDiv)
         newDiv.append(iconDiv)
         newDiv.append(tempDiv)
-        newDiv.append()
+        newDiv.append(humidityDiv)
         $('#forecastFiveD').append(newDiv);
 
     }
