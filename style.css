@@ -33,12 +33,12 @@ height: 90vh;
 
 #forecastFiveD{
     height:40%;
-    border: black solid 3px;
+
 }
 .prevSearch{
 border-bottom: solid 2px black;
 border-radius:0 0 0 4px;
-background-color: gainsboro;
+
 padding:4px;
 width: 100%;
 
@@ -46,7 +46,11 @@ width: 100%;
 
 .forecastBlock{
     height:90%;
-    border: solid black 2px;
+    border: solid steelblue 2px;
     border-radius: 5px;
     background-color:white;
+}
+.prevSearch:hover{
+ cursor: pointer;
+
 }
