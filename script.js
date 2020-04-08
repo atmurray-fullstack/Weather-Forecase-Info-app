@@ -42,6 +42,15 @@ if (localStorage.getItem('city') !== null) {
 
         var lat = response.coord.lat;
         var lon = response.coord.lon;
+        
+        $('#forecastImage').attr({
+            'src': 'http://openweathermap.org/img/wn/' + cityresultsObj.icon + '@2x.png',
+            'height': '100%',
+            'width': 'auto',
+            'margin-left': 'auto',
+            'margin-right': 'auto',
+
+        })
 
         $('#cityDisplay').text(city + '   ' + currentDate);
         $('#tempDisplay').text('Temperature: ' + cityresultsObj.temp + ' F');
