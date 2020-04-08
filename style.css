@@ -16,7 +16,7 @@
 }
 
 .resultDisplay{
-background-color: cadetblue;
+background-color: grey;
 height: 90vh;
 
 }
@@ -26,8 +26,7 @@ height: 90vh;
 
 .currentForecast{
     height:40%;
-    background-color: honeydew;
-    border: red solid 2px;
+;
 }
 
 #forecastFiveD{
@@ -42,11 +41,7 @@ padding:4px;
 width: 100%;
 
 }
-#forecastContainer{
-    height: 100%;
-    background-color: indianred;
 
-}
 .forecastBlock{
     height:90%;
     border: solid black 2px;
