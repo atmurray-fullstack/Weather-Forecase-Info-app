@@ -1,9 +1,8 @@
 var apiKey = '819c140350303d362f2ba760003b1335'
 var cityresultsObj = new Object();
-var cityArr = [];
 var city = '';
 var state = '';
-var iconUrl = ''
+var iconUrl = '';
 function getTime() {
     return moment().format('L');
 }
@@ -18,13 +17,11 @@ var currentDate = getTime();
 
 // var iconURL = 'https://openweathermap.org/img/wn/'+icon+'@2x.png'
 var queryURL = 'https://api.openweathermap.org/data/2.5/weather?q=' + city + '&appid=819c140350303d362f2ba760003b1335'
-console.log(currentDate);
-console.log(localStorage.getItem('city'))
+
 
 
 if (localStorage.getItem('city') !== null) {
     city = localStorage.getItem('city');
-    console.log(city);
     queryURL = 'https://api.openweathermap.org/data/2.5/weather?q=' + city + '&appid=819c140350303d362f2ba760003b1335'
     currentDate = getTime();
 
@@ -33,7 +30,6 @@ if (localStorage.getItem('city') !== null) {
         url: queryURL,
         method: "GET"
     }).then(function (response) {
-        console.log(response);
         cityresultsObj = new Object();
         cityresultsObj.temp = Math.floor((response.main.temp - 273.15) * (9 / 5) + 32);
         cityresultsObj.humidity = response.main.humidity;
@@ -64,8 +60,6 @@ if (localStorage.getItem('city') !== null) {
         }).then(function (response) {
             cityresultsObj.uvIndex = response[0].value;
             $('#uvIndexDisplay').text('UV Index: ' + cityresultsObj.uvIndex)
-            console.log(typeof cityresultsObj.uvIndex)
-            console.log(cityresultsObj.uvIndex)
 
             if (cityresultsObj.uvIndex <= 2) {
                 $('#uvBlock').css({
@@ -84,7 +78,7 @@ if (localStorage.getItem('city') !== null) {
                     'border-radius': '8px'
                 })
 
-            }else if (7.9 < cityresultsObj.uvIndex) {
+            } else if (7.9 < cityresultsObj.uvIndex) {
                 $('#uvBlock').css({
                     'background-color': 'red',
                     'border-radius': '8px'
@@ -100,8 +94,6 @@ if (localStorage.getItem('city') !== null) {
         $('#searched').prepend(newDiv);
         localStorage.setItem('city', city)
 
-        cityArr.push([city, cityresultsObj]);
-        console.log(cityArr)
 
         $.ajax({
             url: 'https://api.openweathermap.org/data/2.5/forecast?q=' + city + '&cnt=5&appid=819c140350303d362f2ba760003b1335',
@@ -109,26 +101,28 @@ if (localStorage.getItem('city') !== null) {
         }).then(function (response) {
             localStorage.setItem('fiveDay', JSON.stringify(response));
             var fiveDayForecast = response;
-            console.log(fiveDayForecast);
-            console.log(fiveDayForecast.list.length)
+
         });
 
 
 
 
         fiveDayForecast = JSON.parse(localStorage.getItem('fiveDay'));
-        console.log(fiveDayForecast);
+
         $('#forecastFiveD').empty()
         for (let i = 0; i < 5; i++) {
 
             var newDiv = $('<div>')
-            var dateDiv = $('<div>').text(currentDate);
-            var tempDiv = $('<div>').text(Math.floor((fiveDayForecast.list[i].main.temp - 273.15) * (9 / 5) + 32) + ' F')
-            var humidityDiv = $('<div>').text(fiveDayForecast.list[i].main.humidity + '%')
+            var dateDiv = $('<div>').text(currentDate)
+            dateDiv.addClass('fiveDiv');
+            var tempDiv = $('<div>').text(Math.floor((fiveDayForecast.list[i].main.temp - 273.15) * (9 / 5) + 32) + ' F');
+            tempDiv.addClass('fiveDiv');
+            var humidityDiv = $('<div>').text(fiveDayForecast.list[i].main.humidity + '%');
+            humidityDiv.addClass('fiveDiv');
             var iconDiv = $('<img>');
             iconDiv.attr({
                 'src': 'https://openweathermap.org/img/wn/' + fiveDayForecast.list[i].weather[0].icon + '@2x.png',
-                'width': '25%',
+                'width': '40%',
                 'height': 'auto'
             })
             iconDiv.addClass('img-fluid');
@@ -149,10 +143,12 @@ if (localStorage.getItem('city') !== null) {
 }
 ///////search button on click event////////////////
 $('#searchButton').on('click', function (event) {
+    
     $('#forecastFiveD').empty()
     event.preventDefault();
     city = $('#inputCity').val().toUpperCase();
-    console.log(city);
+    
+
     queryURL = 'https://api.openweathermap.org/data/2.5/weather?q=' + city + '&appid=819c140350303d362f2ba760003b1335'
     currentDate = getTime();
 
@@ -162,7 +158,6 @@ $('#searchButton').on('click', function (event) {
         method: "GET"
     }).then(function (response) {
 
-        console.log(response);
         cityresultsObj = new Object();
         cityresultsObj.temp = Math.floor((response.main.temp - 273.15) * (9 / 5) + 32);
         cityresultsObj.humidity = response.main.humidity;
@@ -192,8 +187,6 @@ $('#searchButton').on('click', function (event) {
         }).then(function (response) {
             cityresultsObj.uvIndex = response[0].value;
             $('#uvIndexDisplay').text('UV Index: ' + cityresultsObj.uvIndex)
-            console.log(typeof cityresultsObj.uvIndex)
-            console.log(cityresultsObj.uvIndex)
 
             if (cityresultsObj.uvIndex <= 2) {
                 $('#uvBlock').css({
@@ -212,7 +205,7 @@ $('#searchButton').on('click', function (event) {
                     'border-radius': '8px'
                 })
 
-            }else if (7.9 < cityresultsObj.uvIndex) {
+            } else if (7.9 < cityresultsObj.uvIndex) {
                 $('#uvBlock').css({
                     'background-color': 'red',
                     'border-radius': '8px'
@@ -222,14 +215,6 @@ $('#searchButton').on('click', function (event) {
 
         })
 
-
-
-
-
-
-        cityArr.push([city, cityresultsObj]);
-        // console.log(cityArr);
-
     });
     //////////////////// Five Day Forecast ajax/////////////////////////
     $.ajax({
@@ -238,24 +223,25 @@ $('#searchButton').on('click', function (event) {
     }).then(function (response) {
         localStorage.setItem('fiveDay', JSON.stringify(response));
         fiveDayForecast = response;
-        console.log(fiveDayForecast.list);
 
 
 
         fiveDayForecast = JSON.parse(localStorage.getItem('fiveDay'));
-        console.log(fiveDayForecast);
         $('#forecastFiveD').empty()
         for (let i = 0; i < 5; i++) {
 
             var newDiv = $('<div>')
-            var dateDiv = $('<div>').text(currentDate);
-            var tempDiv = $('<div>').text(Math.floor((fiveDayForecast.list[i].main.temp - 273.15) * (9 / 5) + 32) + ' F')
-            var humidityDiv = $('<div>').text(fiveDayForecast.list[i].main.humidity + '%')
-            var iconDiv = $('<img>');
+            var dateDiv = $('<div>').text(currentDate)
+            dateDiv.addClass('fiveDiv');
+            var tempDiv = $('<div>').text(Math.floor((fiveDayForecast.list[i].main.temp - 273.15) * (9 / 5) + 32) + ' F');
+            tempDiv.addClass('fiveDiv');
+            var humidityDiv = $('<div>').text(fiveDayForecast.list[i].main.humidity + '%');
+            humidityDiv.addClass('fiveDiv');            var iconDiv = $('<img>');
             iconDiv.attr({
                 'src': 'https://openweathermap.org/img/wn/' + fiveDayForecast.list[i].weather[0].icon + '@2x.png',
                 'width': '40%',
                 'height': 'auto'
+                
             })
             iconDiv.addClass('img-fluid');
 
@@ -288,10 +274,13 @@ $('#searchButton').on('click', function (event) {
 
 })
 
+$('#inputCity').on('click', function () {
+    $(this).val('');
+})
+
 ///////////////// click event on previous search results /////////////////////
 $('#searched').on('click', function (event) {
     city = event.target.id;
-    // console.log(city);
     currentDate = getTime();
     queryURL = 'https://api.openweathermap.org/data/2.5/weather?q=' + city + '&appid=819c140350303d362f2ba760003b1335'
 
@@ -341,7 +330,7 @@ $('#searched').on('click', function (event) {
                     'border-radius': '8px'
                 })
 
-            }else if (7.9 < cityresultsObj.uvIndex) {
+            } else if (7.9 < cityresultsObj.uvIndex) {
                 $('#uvBlock').css({
                     'background-color': 'red',
                     'border-radius': '8px'
@@ -359,20 +348,20 @@ $('#searched').on('click', function (event) {
         }).then(function (response) {
             localStorage.setItem('fiveDay', JSON.stringify(response));
             fiveDayForecast = response;
-            console.log(fiveDayForecast.list);
 
 
 
             fiveDayForecast = JSON.parse(localStorage.getItem('fiveDay'));
-            console.log(fiveDayForecast);
             $('#forecastFiveD').empty()
             for (let i = 0; i < 5; i++) {
 
                 var newDiv = $('<div>')
-                var dateDiv = $('<div>').text(currentDate);
-                var tempDiv = $('<div>').text(Math.floor((fiveDayForecast.list[i].main.temp - 273.15) * (9 / 5) + 32) + ' F')
-                var humidityDiv = $('<div>').text(fiveDayForecast.list[i].main.humidity + '%')
-                var iconDiv = $('<img>');
+                var dateDiv = $('<div>').text(currentDate)
+                dateDiv.addClass('fiveDiv');
+                var tempDiv = $('<div>').text(Math.floor((fiveDayForecast.list[i].main.temp - 273.15) * (9 / 5) + 32) + ' F');
+                tempDiv.addClass('fiveDiv');
+                var humidityDiv = $('<div>').text(fiveDayForecast.list[i].main.humidity + '%');
+                humidityDiv.addClass('fiveDiv');                var iconDiv = $('<img>');
                 iconDiv.attr({
                     'src': 'https://openweathermap.org/img/wn/' + fiveDayForecast.list[i].weather[0].icon + '@2x.png',
                     'width': '40%',
