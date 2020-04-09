@@ -45,7 +45,7 @@ width: 100%;
 }
 
 .forecastBlock{
-    height:90%;
+    height:70%;
     border: solid steelblue 2px;
     border-radius: 5px;
     background-color:white;
@@ -54,4 +54,8 @@ width: 100%;
  cursor: pointer;
 
 }
-
+#uvBlock{
+    width:70%;
+    color:white;
+    border-radius:8px;
+}

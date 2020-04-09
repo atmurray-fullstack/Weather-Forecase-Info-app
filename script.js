@@ -46,7 +46,7 @@ if (localStorage.getItem('city') !== null) {
         $('#forecastImage').attr({
             'src': 'https://openweathermap.org/img/wn/' + cityresultsObj.icon + '@2x.png',
             'height': 'auto',
-            'width': '100%',
+            'width': '75%',
             'margin-left': 'auto',
             'margin-right': 'auto',
 
@@ -64,6 +64,34 @@ if (localStorage.getItem('city') !== null) {
         }).then(function (response) {
             cityresultsObj.uvIndex = response[0].value;
             $('#uvIndexDisplay').text('UV Index: ' + cityresultsObj.uvIndex)
+            console.log(typeof cityresultsObj.uvIndex)
+            console.log(cityresultsObj.uvIndex)
+
+            if (cityresultsObj.uvIndex <= 2) {
+                $('#uvBlock').css({
+                    'background-color': 'green',
+                    'border-radius': '8px'
+                })
+            } else if (2 < cityresultsObj.uvIndex && cityresultsObj.uvIndex <= 5.9) {
+                $('#uvBlock').css({
+                    'background-color': 'yellow',
+                    'border-radius': '8px'
+                })
+
+            } else if (5.9 < cityresultsObj.uvIndex && cityresultsObj.uvIndex <= 7.9) {
+                $('#uvBlock').css({
+                    'background-color': 'orange',
+                    'border-radius': '8px'
+                })
+
+            }else if (7.9 < cityresultsObj.uvIndex) {
+                $('#uvBlock').css({
+                    'background-color': 'red',
+                    'border-radius': '8px'
+                })
+
+            }
+
         })
 
         var newDiv = $('<div>').text(city);
@@ -95,13 +123,13 @@ if (localStorage.getItem('city') !== null) {
 
             var newDiv = $('<div>')
             var dateDiv = $('<div>').text(currentDate);
-            var tempDiv = $('<div>').text(fiveDayForecast.list[i].main.temp)
-            var humidityDiv = $('<div>').text(fiveDayForecast.list[i].main.humidity)
+            var tempDiv = $('<div>').text(Math.floor((fiveDayForecast.list[i].main.temp - 273.15) * (9 / 5) + 32) + ' F')
+            var humidityDiv = $('<div>').text(fiveDayForecast.list[i].main.humidity + '%')
             var iconDiv = $('<img>');
             iconDiv.attr({
                 'src': 'https://openweathermap.org/img/wn/' + fiveDayForecast.list[i].weather[0].icon + '@2x.png',
-                'height': '45%',
-                'width': 'auto'
+                'width': '25%',
+                'height': 'auto'
             })
             iconDiv.addClass('img-fluid');
             newDiv.addClass('col-2 mx-auto mt-1 text-left forecastBlock');
@@ -146,7 +174,7 @@ $('#searchButton').on('click', function (event) {
         $('#forecastImage').attr({
             'src': 'https://openweathermap.org/img/wn/' + cityresultsObj.icon + '@2x.png',
             'height': 'auto',
-            'width': '100%',
+            'width': '75%',
             'margin-left': 'auto',
             'margin-right': 'auto',
 
@@ -158,6 +186,46 @@ $('#searchButton').on('click', function (event) {
 
 
         ////////////////////ajax call to get uvindex  //////////////////////////////////////
+        $.ajax({
+            url: 'https://api.openweathermap.org/data/2.5/uvi/forecast?appid=' + apiKey + '&lat=' + lat + '&lon=' + lon + '&cnt=1',
+            method: "GET"
+        }).then(function (response) {
+            cityresultsObj.uvIndex = response[0].value;
+            $('#uvIndexDisplay').text('UV Index: ' + cityresultsObj.uvIndex)
+            console.log(typeof cityresultsObj.uvIndex)
+            console.log(cityresultsObj.uvIndex)
+
+            if (cityresultsObj.uvIndex <= 2) {
+                $('#uvBlock').css({
+                    'background-color': 'green',
+                    'border-radius': '8px'
+                })
+            } else if (2 < cityresultsObj.uvIndex && cityresultsObj.uvIndex <= 5.9) {
+                $('#uvBlock').css({
+                    'background-color': 'yellow',
+                    'border-radius': '8px'
+                })
+
+            } else if (5.9 < cityresultsObj.uvIndex && cityresultsObj.uvIndex <= 7.9) {
+                $('#uvBlock').css({
+                    'background-color': 'orange',
+                    'border-radius': '8px'
+                })
+
+            }else if (7.9 < cityresultsObj.uvIndex) {
+                $('#uvBlock').css({
+                    'background-color': 'red',
+                    'border-radius': '8px'
+                })
+
+            }
+
+        })
+
+
+
+
+
 
         cityArr.push([city, cityresultsObj]);
         // console.log(cityArr);
@@ -181,13 +249,13 @@ $('#searchButton').on('click', function (event) {
 
             var newDiv = $('<div>')
             var dateDiv = $('<div>').text(currentDate);
-            var tempDiv = $('<div>').text(fiveDayForecast.list[i].main.temp)
-            var humidityDiv = $('<div>').text(fiveDayForecast.list[i].main.humidity)
+            var tempDiv = $('<div>').text(Math.floor((fiveDayForecast.list[i].main.temp - 273.15) * (9 / 5) + 32) + ' F')
+            var humidityDiv = $('<div>').text(fiveDayForecast.list[i].main.humidity + '%')
             var iconDiv = $('<img>');
             iconDiv.attr({
                 'src': 'https://openweathermap.org/img/wn/' + fiveDayForecast.list[i].weather[0].icon + '@2x.png',
-                'height': '45%',
-                'width': 'auto'
+                'width': '40%',
+                'height': 'auto'
             })
             iconDiv.addClass('img-fluid');
 
@@ -255,6 +323,31 @@ $('#searched').on('click', function (event) {
         }).then(function (response) {
             cityresultsObj.uvIndex = response[0].value;
             $('#uvIndexDisplay').text('UV Index: ' + cityresultsObj.uvIndex)
+
+            if (cityresultsObj.uvIndex <= 2) {
+                $('#uvBlock').css({
+                    'background-color': 'green',
+                    'border-radius': '8px'
+                })
+            } else if (2 < cityresultsObj.uvIndex && cityresultsObj.uvIndex <= 5.9) {
+                $('#uvBlock').css({
+                    'background-color': 'yellow',
+                    'border-radius': '8px'
+                })
+
+            } else if (5.9 < cityresultsObj.uvIndex && cityresultsObj.uvIndex <= 7.9) {
+                $('#uvBlock').css({
+                    'background-color': 'orange',
+                    'border-radius': '8px'
+                })
+
+            }else if (7.9 < cityresultsObj.uvIndex) {
+                $('#uvBlock').css({
+                    'background-color': 'red',
+                    'border-radius': '8px'
+                })
+
+            }
         })
 
         localStorage.setItem('city', city)
@@ -277,13 +370,13 @@ $('#searched').on('click', function (event) {
 
                 var newDiv = $('<div>')
                 var dateDiv = $('<div>').text(currentDate);
-                var tempDiv = $('<div>').text(fiveDayForecast.list[i].main.temp)
-                var humidityDiv = $('<div>').text(fiveDayForecast.list[i].main.humidity)
+                var tempDiv = $('<div>').text(Math.floor((fiveDayForecast.list[i].main.temp - 273.15) * (9 / 5) + 32) + ' F')
+                var humidityDiv = $('<div>').text(fiveDayForecast.list[i].main.humidity + '%')
                 var iconDiv = $('<img>');
                 iconDiv.attr({
                     'src': 'https://openweathermap.org/img/wn/' + fiveDayForecast.list[i].weather[0].icon + '@2x.png',
-                    'height': '45%',
-                    'width': 'auto'
+                    'width': '40%',
+                    'height': 'auto'
                 })
                 iconDiv.addClass('img-fluid')
 
