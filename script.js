@@ -45,13 +45,12 @@ if (localStorage.getItem('city') !== null) {
 
         $('#forecastImage').attr({
             'src': 'https://openweathermap.org/img/wn/' + cityresultsObj.icon + '@2x.png',
-            'height': '100%',
-            'width': 'auto',
+            'height': 'auto',
+            'width': '100%',
             'margin-left': 'auto',
             'margin-right': 'auto',
 
         })
-
         $('#cityDisplay').text(city + '   ' + currentDate);
         $('#tempDisplay').text('Temperature: ' + cityresultsObj.temp + ' F');
         $('#humidityDisplay').text('Humidity: ' + cityresultsObj.humidity + ' %');
@@ -104,7 +103,7 @@ if (localStorage.getItem('city') !== null) {
                 'height': '45%',
                 'width': 'auto'
             })
-
+            iconDiv.addClass('img-fluid');
             newDiv.addClass('col-2 mx-auto mt-1 text-left forecastBlock');
             newDiv.append(dateDiv)
             newDiv.append(iconDiv)
@@ -146,13 +145,12 @@ $('#searchButton').on('click', function (event) {
         var lon = response.coord.lon;
         $('#forecastImage').attr({
             'src': 'https://openweathermap.org/img/wn/' + cityresultsObj.icon + '@2x.png',
-            'height': '100%',
-            'width': 'auto',
+            'height': 'auto',
+            'width': '100%',
             'margin-left': 'auto',
             'margin-right': 'auto',
 
         })
-
         $('#cityDisplay').text(city + '   ' + currentDate);
         $('#tempDisplay').text('Temperature: ' + cityresultsObj.temp + ' F');
         $('#humidityDisplay').text('Humidity: ' + cityresultsObj.humidity + ' %');
@@ -191,6 +189,7 @@ $('#searchButton').on('click', function (event) {
                 'height': '45%',
                 'width': 'auto'
             })
+            iconDiv.addClass('img-fluid');
 
 
             newDiv.addClass('col-2 mx-auto mt-3 text-left forecastBlock');
@@ -286,6 +285,7 @@ $('#searched').on('click', function (event) {
                     'height': '45%',
                     'width': 'auto'
                 })
+                iconDiv.addClass('img-fluid')
 
 
                 newDiv.addClass('col-2 mx-auto mt-3 text-left forecastBlock');
