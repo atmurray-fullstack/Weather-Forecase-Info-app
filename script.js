@@ -10,12 +10,6 @@ var fiveDayForecast = null;
 var currentDate = getTime();
 
 
-
-
-
-
-
-// var iconURL = 'https://openweathermap.org/img/wn/'+icon+'@2x.png'
 var queryURL = 'https://api.openweathermap.org/data/2.5/weather?q=' + city + '&appid=819c140350303d362f2ba760003b1335'
 
 
@@ -221,14 +215,10 @@ $('#searchButton').on('click', function (event) {
         localStorage.setItem('city', city);
 
 
-
-
-
-
     }).catch(function () {
 
-        alert('City Name Not Found');
-
+        alert('City Name Not Found. Previous city weather will be displayed');
+        
     });
 
 
@@ -276,25 +266,12 @@ $('#searchButton').on('click', function (event) {
     });
 
 
-    ///////  APPEND NEW ELEMENTS INSIDE CLICK EVENT//////////
-    // var newDiv = $('<div>').text(city);
-    // newDiv.addClass('prevSearch');
-    // newDiv.attr('id', city);
-    // $('#searched').prepend(newDiv);
-    // localStorage.setItem('city', city);
 
-
-
-
-
-
-
-
-})
+});
 
 $('#inputCity').on('click', function () {
     $(this).val('');
-})
+});
 
 ///////////////// click event on previous search results /////////////////////
 $('#searched').on('click', function (event) {
