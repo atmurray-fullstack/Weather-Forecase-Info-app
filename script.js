@@ -157,7 +157,6 @@ $('#searchButton').on('click', function (event) {
         url: queryURL,
         method: "GET"
     }).then(function (response) {
-        console.log(response)
         cityresultsObj = new Object();
         cityresultsObj.temp = Math.floor((response.main.temp - 273.15) * (9 / 5) + 32);
         cityresultsObj.humidity = response.main.humidity;
@@ -229,7 +228,6 @@ $('#searchButton').on('click', function (event) {
     }).catch(function () {
 
         alert('City Name Not Found');
-        $('#forecastImage').attr('src','');
 
     });
 
