@@ -143,11 +143,11 @@ if (localStorage.getItem('city') !== null) {
 }
 ///////search button on click event////////////////
 $('#searchButton').on('click', function (event) {
-    
+
     $('#forecastFiveD').empty()
     event.preventDefault();
     city = $('#inputCity').val().toUpperCase();
-    
+
 
     queryURL = 'https://api.openweathermap.org/data/2.5/weather?q=' + city + '&appid=819c140350303d362f2ba760003b1335'
     currentDate = getTime();
@@ -157,7 +157,7 @@ $('#searchButton').on('click', function (event) {
         url: queryURL,
         method: "GET"
     }).then(function (response) {
-
+        console.log(response)
         cityresultsObj = new Object();
         cityresultsObj.temp = Math.floor((response.main.temp - 273.15) * (9 / 5) + 32);
         cityresultsObj.humidity = response.main.humidity;
@@ -215,7 +215,27 @@ $('#searchButton').on('click', function (event) {
 
         })
 
+        var newDiv = $('<div>').text(city);
+        newDiv.addClass('prevSearch');
+        newDiv.attr('id', city);
+        $('#searched').prepend(newDiv);
+        localStorage.setItem('city', city);
+
+
+
+
+
+
+    }).catch(function () {
+
+        alert('City Name Not Found');
+        $('#forecastImage').attr('src','');
+
     });
+
+
+
+
     //////////////////// Five Day Forecast ajax/////////////////////////
     $.ajax({
         url: 'https://api.openweathermap.org/data/2.5/forecast?q=' + city + '&cnt=5&appid=819c140350303d362f2ba760003b1335',
@@ -236,12 +256,12 @@ $('#searchButton').on('click', function (event) {
             var tempDiv = $('<div>').text(Math.floor((fiveDayForecast.list[i].main.temp - 273.15) * (9 / 5) + 32) + ' F');
             tempDiv.addClass('fiveDiv');
             var humidityDiv = $('<div>').text(fiveDayForecast.list[i].main.humidity + '%');
-            humidityDiv.addClass('fiveDiv');            var iconDiv = $('<img>');
+            humidityDiv.addClass('fiveDiv'); var iconDiv = $('<img>');
             iconDiv.attr({
                 'src': 'https://openweathermap.org/img/wn/' + fiveDayForecast.list[i].weather[0].icon + '@2x.png',
                 'width': '40%',
                 'height': 'auto'
-                
+
             })
             iconDiv.addClass('img-fluid');
 
@@ -259,11 +279,11 @@ $('#searchButton').on('click', function (event) {
 
 
     ///////  APPEND NEW ELEMENTS INSIDE CLICK EVENT//////////
-    var newDiv = $('<div>').text(city);
-    newDiv.addClass('prevSearch');
-    newDiv.attr('id', city);
-    $('#searched').prepend(newDiv);
-    localStorage.setItem('city', city);
+    // var newDiv = $('<div>').text(city);
+    // newDiv.addClass('prevSearch');
+    // newDiv.attr('id', city);
+    // $('#searched').prepend(newDiv);
+    // localStorage.setItem('city', city);
 
 
 
@@ -361,7 +381,7 @@ $('#searched').on('click', function (event) {
                 var tempDiv = $('<div>').text(Math.floor((fiveDayForecast.list[i].main.temp - 273.15) * (9 / 5) + 32) + ' F');
                 tempDiv.addClass('fiveDiv');
                 var humidityDiv = $('<div>').text(fiveDayForecast.list[i].main.humidity + '%');
-                humidityDiv.addClass('fiveDiv');                var iconDiv = $('<img>');
+                humidityDiv.addClass('fiveDiv'); var iconDiv = $('<img>');
                 iconDiv.attr({
                     'src': 'https://openweathermap.org/img/wn/' + fiveDayForecast.list[i].weather[0].icon + '@2x.png',
                     'width': '40%',
